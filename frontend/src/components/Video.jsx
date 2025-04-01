@@ -46,7 +46,7 @@ const Video = () => {
   </div>
 
   <div className='flex gap-5 py-3 mt-4'>
-    <Button2 text="Book Appointment"/>
+    <Button2 href='#speciality' text="Book Appointment"/>
   <Button2 text="About Us"/>
   </div>
 

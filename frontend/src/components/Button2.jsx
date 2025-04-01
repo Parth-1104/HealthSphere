@@ -1,20 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Button = ({text}) => {
+const Button2 = ({ text, href }) => {
   return (
     <StyledWrapper>
-      <button className="cssbuttons-io-button">
+      <a href={href} className="cssbuttons-io-button">
         <span>{text}</span>
-      </button>
+      </a>
     </StyledWrapper>
   );
-}
+};
 
 const StyledWrapper = styled.div`
   .cssbuttons-io-button {
     display: flex;
     align-items: center;
+    justify-content: center;
     font-family: inherit;
     cursor: pointer;
     font-weight: 500;
@@ -26,10 +27,7 @@ const StyledWrapper = styled.div`
     box-shadow: 0 0.7em 1.5em -0.5em #14a73e98;
     letter-spacing: 0.05em;
     border-radius: 20em;
-  }
-
-  .cssbuttons-io-button svg {
-    margin-right: 6px;
+    text-decoration: none;
   }
 
   .cssbuttons-io-button:hover {
@@ -38,6 +36,7 @@ const StyledWrapper = styled.div`
 
   .cssbuttons-io-button:active {
     box-shadow: 0 0.3em 1em -0.5em #14a73e98;
-  }`;
+  }
+`;
 
-export default Button;
+export default Button2;

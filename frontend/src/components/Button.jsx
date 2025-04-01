@@ -1,9 +1,10 @@
 import React from 'react';
 
-const Button = ({text="Explore"}) => {
+const Button = ({ text = "Explore", onClick }) => {
   return (
     <button 
-      type="submit" 
+      type="button"  // Change to button to prevent unintended form submission
+      onClick={onClick}  // Attach the onClick event here
       className="relative flex justify-center gap-2 items-center mx-auto shadow-xl text-lg bg-gray-50 backdrop-blur-md 
       lg:font-semibold isolation-auto border-gray-50 overflow-hidden border-2 rounded-full group px-6 py-3 
       before:absolute before:w-full before:h-full before:bg-emerald-500 before:rounded-full 
