@@ -13,15 +13,24 @@ const Navbar = () => {
     <div className="flex items-center justify-between text-sm text-black py-2 mb-3 ml-3">
       {/* Logo */}
       <img className="w-44 cursor-pointer" src={assets.logo} alt="Logo" />
+      <ul className="hidden md:flex items-start gap-6 text-[20px] py-4 mt-3">
+  {[
+    { name: "HOME", path: "/" },
+    { name: "All Doctors", path: "/doctors" },
+    { name: "About", path: "/about" },
+    { name: "Contact", path: "/contact" },
+  ].map((item, index) => (
+    <NavLink key={index} to={item.path} className="group">
+      <li className="relative cursor-pointer text-gray-700 hover:text-blue-600 transition duration-300">
+        {item.name}
+        <hr className="w-0 group-hover:w-full border-t-2 border-blue-600 transition-all duration-300 mt-1" />
+      </li>
+    </NavLink>
+  ))}
+</ul>
 
       {/* Navigation Links */}
-      <ul className="hidden md:flex items-start gap-10 ml-10 mt-4 text-[18px] font-medium">
-        {["HOME", "DOCTORS", "TRAVEL", "ABOUT US", "CONTACT"].map((item, index) => (
-          <NavLink key={index} to={`/${item.toLowerCase().replace(" ", "")}`}>
-            <li className="cursor-pointer hover:text-blue-600">{item}</li>
-          </NavLink>
-        ))}
-      </ul>
+    
 
       {/* Right Section */}
       <div className="mr-5 flex items-center gap-5">
