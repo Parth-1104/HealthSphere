@@ -4,6 +4,8 @@ import Features from '../components/Features'
 import Heroimage from '../components/Heroimage'
 import SpecialityMenu from '../components/SpecialityMenu'
 import TopDoctors from '../components/TopDoctors'
+import Footer from '../components/Foooter'
+import Banner from '../components/Banner'
 // import speciality from '../components/SpecialityMenu'
 const Home = () => {
   return (
@@ -12,9 +14,7 @@ const Home = () => {
     <Video/>
       <Features/>
       <SpecialityMenu/>
-      <TopDoctors/>
-      <Banner />
-      
+      <Footer/>
     </div>
   )
 }

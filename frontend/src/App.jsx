@@ -11,6 +11,7 @@ import Navbar from './components/Navbar'
 import bgImage from './assets/assets_frontend/BG.png' // Correct way to import an image inside `src`
 import Travel from './pages/Travel'
 import About from './pages/About'
+import Footer from './components/Foooter'
 
 const App = () => {
   
@@ -33,7 +34,8 @@ const App = () => {
         <Route path='/my-appointments' element={<Myappointments />} />
         <Route path='/appointment/:docId' element={<Appointment />} />
       </Routes>
-      <Footer />
+
+
     </div>
 
   )
