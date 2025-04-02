@@ -3,6 +3,7 @@ import Video from '../components/Video'
 import Features from '../components/Features'
 import Heroimage from '../components/Heroimage'
 import SpecialityMenu from '../components/SpecialityMenu'
+import TopDoctors from '../components/TopDoctors'
 // import speciality from '../components/SpecialityMenu'
 const Home = () => {
   return (
@@ -11,7 +12,9 @@ const Home = () => {
     <Video/>
       <Features/>
       <SpecialityMenu/>
-
+      <TopDoctors/>
+      <Banner />
+      
     </div>
   )
 }

@@ -12,7 +12,7 @@ const Navbar = () => {
   return (
     <div className="flex items-center justify-between text-sm text-black py-2 mb-3 ml-3">
       {/* Logo */}
-      <img className="w-44 cursor-pointer" src={assets.logo} alt="Logo" />
+      <img onClick={()=> navigate('/')} className="w-44 cursor-pointer" src={assets.logo} alt="Logo" />
       <ul className="hidden md:flex items-start gap-6 text-[20px] py-4 mt-3">
   {[
     { name: "HOME", path: "/" },
