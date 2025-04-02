@@ -14,6 +14,7 @@ const Home = () => {
     <Video/>
       <Features/>
       <SpecialityMenu/>
+<TopDoctors/>
       <Footer/>
     </div>
   )

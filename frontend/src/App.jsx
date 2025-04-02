@@ -8,10 +8,10 @@ import Myprofile from './pages/Myprofile'
 import Myappointments from './pages/Myappointments'
 import Appointment from './pages/Appointment'
 import Navbar from './components/Navbar'
-import bgImage from './assets/assets_frontend/BG.png' // Correct way to import an image inside `src`
+
 import Travel from './pages/Travel'
 import About from './pages/About'
-import Footer from './components/Foooter'
+
 
 const App = () => {
   
