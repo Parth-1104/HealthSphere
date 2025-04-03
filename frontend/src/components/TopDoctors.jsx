@@ -15,7 +15,7 @@ const TopDoctors = () => {
                 {doctors.slice(0, 10).map((item) => (
                     <div 
                         key={item._id} 
-                        onClick={() => navigate(`/appointment/${item._id}`)}
+                        onClick={() => {navigate(`/appointment/${item._id}`); scrollTo(0,0)}}
                         className="border border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-500"
                     >
                         <img className="bg-blue-50 w-full h-40 object-cover" src={item.image} alt={item.name} />
