@@ -1,42 +1,54 @@
 import React from 'react';
-import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import { motion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 
-const Button2 = ({ text, href }) => {
-  return (
-    <StyledWrapper>
-      <a href={href} className="cssbuttons-io-button">
-        <span>{text}</span>
-      </a>
-    </StyledWrapper>
+const Button2 = ({ text, href, className = '' }) => {
+  const buttonContent = (
+    <motion.div
+      className={`relative inline-flex items-center justify-center gap-2 px-6 py-3 overflow-hidden rounded-full font-medium transition-all ${className}`}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+    >
+      <motion.span
+        initial={{ opacity: 1, x: 0 }}
+        whileHover={{ opacity: 1, x: -4 }}
+        className="relative z-10"
+      >
+        {text}
+      </motion.span>
+      <motion.div
+        initial={{ opacity: 0, x: -10 }}
+        whileHover={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.2 }}
+        className="relative z-10"
+      >
+        <ArrowRight className="w-5 h-5" />
+      </motion.div>
+      <motion.div
+        className="absolute inset-0 w-full h-full bg-gradient-to-r from-blue-500 to-blue-600 opacity-0"
+        initial={{ opacity: 0, scale: 0 }}
+        whileHover={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.2 }}
+      />
+    </motion.div>
   );
+
+  if (href) {
+    return (
+      <a href={href} className="inline-block">
+        {buttonContent}
+      </a>
+    );
+  }
+
+  return <button className="inline-block">{buttonContent}</button>;
 };
 
-const StyledWrapper = styled.div`
-  .cssbuttons-io-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: inherit;
-    cursor: pointer;
-    font-weight: 500;
-    font-size: 16px;
-    padding: 0.7em 1.4em 0.7em 1.1em;
-    color: white;
-    background: #4F6AD5;
-    border: none;
-    box-shadow: 0 0.7em 1.5em -0.5em #14a73e98;
-    letter-spacing: 0.05em;
-    border-radius: 20em;
-    text-decoration: none;
-  }
-
-  .cssbuttons-io-button:hover {
-    box-shadow: 0 0.5em 1.5em -0.5em #14a73e98;
-  }
-
-  .cssbuttons-io-button:active {
-    box-shadow: 0 0.3em 1em -0.5em #14a73e98;
-  }
-`;
+Button2.propTypes = {
+  text: PropTypes.string.isRequired,
+  href: PropTypes.string,
+  className: PropTypes.string
+};
 
 export default Button2;

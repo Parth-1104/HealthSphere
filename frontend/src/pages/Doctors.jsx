@@ -23,23 +23,30 @@ const Doctors = () => {
   }, [doctors, speciality]);
 
   return (
-    <div>
+    <div className='py-[92px]'>
       <p className="text-gray-600"> Browse through the doctors specialist.</p>
       <div className="flex flex-col sm:flex-row items-start gap-5 mt-5">
-        <button className={`py-1 px-3 border rounded text-sm transition-all sm:hidden ${showFilter ? 'bg-indigo-500 text-white' : ''}`} onClick={()=>setShowFilter(prev => !prev)}>Filters</button>
-        <div className={`flex-col text-sm text-gray-600 ${showFilter ? 'flex' : 'hidden-sm:flex'}`}>
-          {['General physician', 'Gynecologist', 'Dermatologist', 'Pediatricians', 'Neurologist', 'Gastroenterologist'].map((spec) => (
-            <p
-              key={spec}
-              onClick={() => (speciality === spec ? navigate('/doctors') : navigate(`/doctors/${spec}`))}
-              className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${
-                speciality === spec ? 'bg-indigo-100 text-black' : ''
-              }`}
-            >
-              {spec}
-            </p>
-          ))}
-        </div>
+      <button
+  className={`py-1 px-3 border rounded text-sm transition-all sm:hidden ${showFilter ? 'bg-indigo-500 text-white' : ''}`}
+  onClick={() => setShowFilter(prev => !prev)}
+>
+  Filters
+</button>
+
+<div className={`flex-col text-sm text-gray-600 ${showFilter ? 'flex' : 'hidden'} sm:flex`}>
+  {['General physician', 'Gynecologist', 'Dermatologist', 'Pediatricians', 'Neurologist', 'Gastroenterologist'].map((spec) => (
+    <p
+      key={spec}
+      onClick={() => (speciality === spec ? navigate('/doctors') : navigate(`/doctors/${spec}`))}
+      className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${
+        speciality === spec ? 'bg-indigo-100 text-black' : ''
+      }`}
+    >
+      {spec}
+    </p>
+  ))}
+</div>
+
 
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 gap-y-6">
           {filterDoc.map((item) => (
