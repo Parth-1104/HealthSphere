@@ -189,6 +189,26 @@ const doctorDashboard = async (req, res) => {
         res.json({ success: false, message: error.message })
     }
 }
+ const sendMessageToPatient = async (req, res) => {
+    const { appointmentId, message } = req.body;
+
+    try {
+        const appointment = await appointmentModel.findByIdAndUpdate(
+            appointmentId,
+            { doctorMessage: message },
+            { new: true } // Return the updated document
+        );
+
+        if (!appointment) {
+            return res.status(404).json({ success: false, message: 'Appointment not found.' });
+        }
+
+        res.json({ success: true, message: 'Message sent successfully.', appointment });
+    } catch (error) {
+        console.error('Error sending message:', error);
+        res.status(500).json({ success: false, message: 'Failed to send message.', error: error.message });
+    }
+}
 
 export {
     loginDoctor,
@@ -199,5 +219,6 @@ export {
     appointmentComplete,
     doctorDashboard,
     doctorProfile,
-    updateDoctorProfile
+    updateDoctorProfile,
+    sendMessageToPatient
 }
