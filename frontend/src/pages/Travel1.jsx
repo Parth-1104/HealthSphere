@@ -39,7 +39,7 @@ function HomeMediTrip() {
         {/* Feature Section */}
         <div className="bg-white rounded-2xl shadow-2xl p-10 w-full max-w-5xl">
           <h2 className="text-3xl font-bold mb-10 text-indigo-800 text-center">
-            Why Foreigners Trust MediTrip in India
+            Why Foreigners Trust HealthSphere in India
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-indigo-50 p-6 rounded-lg">

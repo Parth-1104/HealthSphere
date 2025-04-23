@@ -72,7 +72,7 @@ const Navbar = () => {
                     <li><NavLink to="/doctors" className={getNavLinkClass}>DOCTORS</NavLink></li>
                     <li><NavLink to="/travel" className={getNavLinkClass}>TRAVEL</NavLink></li>
                     <li><NavLink to="/about" className={getNavLinkClass}>ABOUT</NavLink></li>
-                    <li><NavLink to="/contact" className={getNavLinkClass}>CONTACT</NavLink></li>
+                    {/* <li><NavLink to="/contact" className={getNavLinkClass}>CONTACT</NavLink></li> */}
                     
                 </ul>
 
