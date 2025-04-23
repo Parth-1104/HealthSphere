@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Bitcoin, Car, Video, UserRound, Plane, Building2, Stethoscope, Shield, Globe, ArrowRight, Check, ChevronRight, Heart, Phone, Calendar } from 'lucide-react';
-
+import { useNavigate } from 'react-router-dom';
 function App() {
   const [activeTab, setActiveTab] = useState(0);
   const [scrolled, setScrolled] = useState(false);
@@ -10,6 +10,8 @@ function App() {
   const targetSectionRef = useRef(null);
   const mobileFrameRef = useRef(null);
   const frameAttachmentRef = useRef(null);
+  const navigate = useNavigate();
+  
   
   useEffect(() => {
     const handleScroll = () => {
@@ -396,9 +398,12 @@ function App() {
           <div>
             <p className="font-semibold text-gray-900 text-sm">Schedule your consultation</p>
             <p className="text-xs text-gray-500 mb-2">Our specialists are ready to help</p>
-            <button className="text-xs bg-indigo-600 text-white px-3 py-1 rounded font-medium hover:bg-indigo-700 transition-colors">
-              Book Now
-            </button>
+            <button
+      className="text-xs bg-indigo-600 text-white px-3 py-1 rounded font-medium hover:bg-indigo-700 transition-colors"
+      onClick={() => navigate('/doctors')}
+    >
+      Book Now
+    </button>
           </div>
           <button className="text-gray-400 hover:text-gray-600">
             ✕
@@ -420,9 +425,12 @@ function App() {
               <p className="text-sm text-gray-600">50+ countries, 500+ hospitals, 1000+ specialists</p>
             </div>
           </div>
-          <button className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition-colors whitespace-nowrap mt-3 sm:mt-0 shadow-md">
-            Get Started Now
-          </button>
+          <button
+      className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition-colors whitespace-nowrap mt-3 sm:mt-0 shadow-md"
+      onClick={() => navigate('/login')}
+    >
+      Get Started Now
+    </button>
         </div>
       </div>
       

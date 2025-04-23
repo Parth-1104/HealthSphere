@@ -148,7 +148,7 @@ const MyAppointments = () => {
     };
 
     return (
-        <div>
+        <div className='mt-[92px]'>
             <p className='pb-3 mt-12 text-lg font-medium text-gray-600 border-b'>My appointments</p>
             <div className=''>
                 {appointments.map((item, index) => (
