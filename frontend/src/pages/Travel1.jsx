@@ -26,11 +26,12 @@ function HomeMediTrip() {
             <span>Travel Assistance</span>
           </button>
           <button
-            onClick={() => navigate('/book-consultation')}
-            className="bg-white text-blue-600 border border-blue-600 px-8 py-3 rounded-full hover:bg-blue-50 transition-colors w-full sm:w-auto"
-          >
-            Book Cab
-          </button>
+  onClick={() => window.location.href = 'https://navigoo.vercel.app/'}
+  className="bg-white text-blue-600 border border-blue-600 px-8 py-3 rounded-full hover:bg-blue-50 transition-colors w-full sm:w-auto"
+>
+  Book Cab
+</button>
+
         </div>
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-xl font-semibold mb-4">Why Choose MediTrip?</h2>
