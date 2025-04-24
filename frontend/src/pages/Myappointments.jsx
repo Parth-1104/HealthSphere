@@ -58,45 +58,70 @@ const MyAppointments = () => {
     };
 
     const initPay = (order) => {
+        if (!window.Razorpay || !import.meta.env.VITE_RAZORPAY_KEY_ID) {
+            toast.error("Razorpay is not configured properly.");
+            return;
+        }
+    
         const options = {
             key: import.meta.env.VITE_RAZORPAY_KEY_ID,
-            amount: order.amount,
+            amount: order.amount.toString(), // Amount should be string and in paise
             currency: order.currency,
             name: 'Appointment Payment',
-            description: 'Appointment Payment',
+            description: 'Consultation Fee',
             order_id: order.id,
-            receipt: order.receipt,
-            handler: async (response) => {
+            handler: async function (response) {
                 try {
-                    const { data } = await axios.post(backendUrl + '/api/user/verifyRazorpay', response, { headers: { token } });
-                    if (data.success) {
-                        navigate('/my-appointments');
+                    const verifyRes = await axios.post(
+                        `${backendUrl}/api/user/verifyRazorpay`,
+                        {
+                            ...response,
+                            appointmentId: order.appointmentId
+                        },
+                        {
+                            headers: { token }
+                        }
+                    );
+    
+                    if (verifyRes.data.success) {
+                        toast.success("Payment successful");
+                        setPayment('');
                         getUserAppointments();
+                    } else {
+                        toast.error(verifyRes.data.message || "Payment verification failed");
                     }
                 } catch (error) {
                     console.error(error);
-                    toast.error(error.message);
+                    toast.error("Payment verification error");
                 }
             },
+            theme: {
+                color: '#6366F1',
+            },
         };
+    
         const rzp = new window.Razorpay(options);
         rzp.open();
     };
+    
 
     const appointmentRazorpay = async (appointmentId) => {
         try {
-            const { data } = await axios.post(backendUrl + '/api/user/payment-razorpay', { appointmentId }, { headers: { token } });
+            const { data } = await axios.post(`${backendUrl}/api/user/payment-razorpay`, { appointmentId }, { headers: { token } });
+    
             if (data.success) {
+                // Attach appointmentId for use in handler
+                data.order.appointmentId = appointmentId;
                 initPay(data.order);
             } else {
                 toast.error(data.message);
             }
         } catch (error) {
             console.error(error);
-            toast.error(error.message);
+            toast.error("Failed to create payment order");
         }
     };
-
+    
     const appointmentStripe = async (appointmentId) => {
         try {
             const { data } = await axios.post(backendUrl + '/api/user/payment-stripe', { appointmentId }, { headers: { token } });
