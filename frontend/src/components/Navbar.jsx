@@ -49,22 +49,23 @@ const Navbar = () => {
                 : 'py-4 bg-gradient-to-br from-indigo-600 to-violet-800'
         }`}>
             <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-                {/* Logo */}
-                <div
-                    onClick={() => navigate('/')}
-                    className="flex items-center gap-3 cursor-pointer group"
-                >
-                    <div className="w-12 h-12 rounded-full p-1 shadow-md transform transition-transform group-hover:scale-205">
-                        <img 
-                            className="w-full h-full object-cover" 
-                            src={assets.newlogo} 
-                            alt="HealthSphere" 
-                        />
-                    </div>
-                    <span className="text-2xl font-bold text-white">
-                        HealthSphere
-                    </span>
-                </div>
+    {/* Logo */}
+    <div
+        onClick={() => navigate('/')}
+        className="flex items-center gap-3 cursor-pointer group"
+    >
+        <div className="w-12 h-12 rounded-full p-1 shadow-md transform transition-transform group-hover:scale-105">
+            <img 
+                className="w-full h-full object-cover" 
+                src={assets.newlogo} 
+                alt="HealthSphere" 
+            />
+        </div>
+        <span className="text-2xl font-bold text-white tracking-wide font-poppins">
+            Health<span className="text-emerald-400 font-semibold">Sphere</span>
+        </span>
+    </div>
+
 
                 {/* Desktop Navigation */}
                 <ul className="hidden lg:flex items-center gap-x-8 font-medium">
@@ -173,7 +174,7 @@ const Navbar = () => {
                             <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center">
                                 <img className="w-7 h-7" src={assets.newlogo} alt="Logo" />
                             </div>
-                            <span className="text-lg font-bold text-white">
+                            <span className="text-lg  font-bold text-white">
                                 HealthSphere
                             </span>
                         </div>
@@ -193,7 +194,7 @@ const Navbar = () => {
                             <li><NavLink onClick={() => setShowMenu(false)} to="/" className={getMobileNavLinkClass}>HOME</NavLink></li>
                             <li><NavLink onClick={() => setShowMenu(false)} to="/doctors" className={getMobileNavLinkClass}>ALL DOCTORS</NavLink></li>
                             <li><NavLink onClick={() => setShowMenu(false)} to="/about" className={getMobileNavLinkClass}>ABOUT</NavLink></li>
-                            <li><NavLink onClick={() => setShowMenu(false)} to="/contact" className={getMobileNavLinkClass}>CONTACT</NavLink></li>
+                            {/* <li><NavLink onClick={() => setShowMenu(false)} to="/contact" className={getMobileNavLinkClass}>CONTACT</NavLink></li> */}
                             <li><NavLink onClick={() => setShowMenu(false)} to="/travel" className={getMobileNavLinkClass}>TRAVEL</NavLink></li>
                         </ul>
                         

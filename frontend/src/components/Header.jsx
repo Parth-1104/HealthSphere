@@ -7,12 +7,28 @@ function App() {
   const [scrolled, setScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [floatingPosition, setFloatingPosition] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const floatingElementRef = useRef(null);
   const targetSectionRef = useRef(null);
   const mobileFrameRef = useRef(null);
   const frameAttachmentRef = useRef(null);
   const navigate = useNavigate();
   
+  // Check if the device is mobile based on screen width
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    // Initial check
+    checkMobile();
+    
+    // Add event listener for window resize
+    window.addEventListener('resize', checkMobile);
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
   
   useEffect(() => {
     const handleScroll = () => {
@@ -105,28 +121,31 @@ function App() {
     },
   ];
 
+  // Calculate rotation threshold - MODIFIED for earlier rotation in mobile view
+  const rotationThreshold = isMobile ? 0.02 : 0.2;
+
   return (
     <div className="min-h-screen mt-32 bg-gradient-to-b from-indigo-50 to-white">
-      {/* Floating Mobile Frame - Modified with landscape orientation content */}
+      {/* Floating Mobile Frame - Modified for earlier rotation in mobile view */}
       <div 
         ref={mobileFrameRef}
         className="fixed z-40 transition-all duration-700 ease-in-out"
         style={{
-          top: scrollProgress < 0.2 ? '25%' : '25%',
-          right: scrollProgress < 0.2 ? '50%' : '10%',
-          transform: `translate(${scrollProgress < 0.2 ? '50%' : '0'}, -50%) 
+          top: scrollProgress < rotationThreshold ? '25%' : '25%',
+          right: scrollProgress < rotationThreshold ? '50%' : '10%',
+          transform: `translate(${scrollProgress < rotationThreshold ? '50%' : '0'}, -50%) 
                      scale(${0.7 + scrollProgress * 0.2}) 
-                     rotate(${scrollProgress < 0.2 ? '0deg' : '90deg'})`,
+                     rotate(${scrollProgress < rotationThreshold ? '0deg' : '90deg'})`,
           width: '280px',
-          height: scrollProgress < 0.2 ? '160px' : '560px',
+          height: scrollProgress < rotationThreshold ? '160px' : '560px',
           borderRadius: '24px',
           boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
           background: 'white',
           border: '12px solid #1e293b',
           overflow: 'hidden',
-          opacity: scrollProgress > 0.5 ? 0 : 1,
-          pointerEvents: scrollProgress > 0.55 ? 'none' : 'auto',
-          right: scrollProgress < 0.2 ? '50%' : (scrollProgress < 0.4 ? '0.5%' : '2%'),
+          opacity: (isMobile && scrollProgress > 0.04) || (!isMobile && scrollProgress > 0.5) ? 0 : 1,
+          pointerEvents: (isMobile && scrollProgress > 0.3) || (!isMobile && scrollProgress > 0.55) ? 'none' : 'auto',
+          right: scrollProgress < rotationThreshold ? '50%' : (scrollProgress < 0.4 ? '0.5%' : '2%'),
         }}
       >
         <div className="absolute top-0 left-0 right-0 h-6 bg-gray-800 flex items-center justify-center z-10">
@@ -135,7 +154,7 @@ function App() {
         <div className="w-full h-full bg-gradient-to-br from-indigo-600 to-violet-800 overflow-auto p-4">
           {/* Responsive content based on orientation */}
           <div className="h-full flex flex-col justify-center items-center text-white">
-            {scrollProgress < 0.2 ? (
+            {scrollProgress < rotationThreshold ? (
               // Portrait mode content
               <>
                 <Stethoscope className="w-12 h-12 mb-4" />
@@ -145,37 +164,37 @@ function App() {
             ) : (
               // Landscape mode content - Horizontal layout with video call focus
               <div className="flex flex-row items-center justify-between w-full h-full">
-  {/* Remote Doctor Card */}
-  <div className="flex-1 p-2 -ml-5 transform -rotate-90 flex flex-col justify-center items-center">
-    <Video className="w-10 h-10 " />
-    <p className="text-lg font-bold whitespace-nowrap ">Remote Doctor</p>
-    {/* <p className="text-xs opacity-80 text-center">Connect virtually anywhere</p> */}
-  </div>
+                {/* Remote Doctor Card */}
+                <div className="flex-1 p-2 -ml-5 transform -rotate-90 flex flex-col justify-center items-center">
+                  <Video className="w-10 h-10 " />
+                  <p className="text-lg font-bold whitespace-nowrap ">Remote Doctor</p>
+                  {/* <p className="text-xs opacity-80 text-center">Connect virtually anywhere</p> */}
+                </div>
 
-  {/* Rotated Doctor Info Card */}
-  <div className="flex-1 p-2 bg-indigo-800/40 rounded-lg h-4/5 flex items-center justify-center">
-    <div className="transform -rotate-90 flex flex-col justify-center items-center">
-      <div className="rounded-full bg-white/20 p-3 mb-2">
-        <UserRound className="w-6 h-6" />
-      </div>
-      <div className="text-center">
-        <p className="text-xs font-bold">Dr. Sarah Chen</p>
-        <p className="text-xs opacity-70">Cardiology</p>
-        <div className="mt-2 flex justify-center">
-          <button className="bg-white/20 rounded-full p-1">
-            <Phone className="w-4 h-4" />
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
+                {/* Rotated Doctor Info Card */}
+                <div className="flex-1 p-2 bg-indigo-800/40 rounded-lg h-4/5 flex items-center justify-center">
+                  <div className="transform -rotate-90 flex flex-col justify-center items-center">
+                    <div className="rounded-full bg-white/20 p-3 mb-2">
+                      <UserRound className="w-6 h-6" />
+                    </div>
+                    <div className="text-center">
+                      <p className="text-xs font-bold">Dr. Sarah Chen</p>
+                      <p className="text-xs opacity-70">Cardiology</p>
+                      <div className="mt-2 flex justify-center">
+                        <button className="bg-white/20 rounded-full p-1">
+                          <Phone className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             )}
             
-            {/* Dynamic content based on scroll position */}
-            <div className={`mt-6 flex ${scrollProgress < 0.2 ? 'flex-col' : 'flex-row flex-wrap justify-center'} gap-2 w-full max-w-xs`}>
-              {scrollProgress > 0.3 && (
+            {/* Dynamic content based on scroll position - Adjusted thresholds for mobile */}
+            <div className={`mt-6 flex ${scrollProgress < rotationThreshold ? 'flex-col' : 'flex-row flex-wrap justify-center'} gap-2 w-full max-w-xs`}>
+              {/* Adjusted threshold for first item to appear earlier */}
+              {scrollProgress > (isMobile ? 0.15 : 0.3) && (
                 <div className="bg-white/20 backdrop-blur-sm p-3 rounded-lg animate-fadeIn">
                   <div className="flex items-center gap-2">
                     <Building2 className="w-5 h-5" />
@@ -184,7 +203,8 @@ function App() {
                 </div>
               )}
               
-              {scrollProgress > 0.4 && (
+              {/* Adjusted threshold for second item to appear earlier */}
+              {scrollProgress > (isMobile ? 0.2 : 0.4) && (
                 <div className="bg-white/20 backdrop-blur-sm p-3 rounded-lg animate-fadeIn">
                   <div className="flex items-center gap-2">
                     <UserRound className="w-5 h-5" />
@@ -193,7 +213,8 @@ function App() {
                 </div>
               )}
               
-              {scrollProgress > 0.5 && scrollProgress < 0.6 && (
+              {/* Adjusted threshold for third item to appear earlier */}
+              {scrollProgress > (isMobile ? 0.25 : 0.5) && scrollProgress < (isMobile ? 0.35 : 0.6) && (
                 <div className="bg-white/20 backdrop-blur-sm p-3 rounded-lg animate-fadeIn">
                   <div className="flex items-center gap-2">
                     <Video className="w-5 h-5" />
@@ -261,19 +282,20 @@ function App() {
         </div>
       </div>
       
-      {/* Quick Contact Floating Buttons */}
-      <div className="fixed left-6 top-1/3 flex flex-col gap-3 z-50">
-        <button className="bg-indigo-600 hover:bg-indigo-700 text-white p-3 rounded-full shadow-lg transition-transform hover:scale-110">
-          <Phone className="w-6 h-6" />
-        </button>
-        <button className="bg-violet-500 hover:bg-violet-600 text-white p-3 rounded-full shadow-lg transition-transform hover:scale-110">
-          <Heart className="w-6 h-6" />
-        </button>
-        {/* Added Video Call Quick Button */}
-        <button className="bg-emerald-500 hover:bg-emerald-600 text-white p-3 rounded-full shadow-lg transition-transform hover:scale-110">
-          <Video className="w-6 h-6" />
-        </button>
-      </div>
+      {/* Quick Contact Floating Buttons - Only show on desktop */}
+      {!isMobile && (
+        <div className="fixed left-6 top-1/3 flex flex-col gap-3 z-50">
+          <button className="bg-indigo-600 hover:bg-indigo-700 text-white p-3 rounded-full shadow-lg transition-transform hover:scale-110">
+            <Phone className="w-6 h-6" />
+          </button>
+          <button className="bg-violet-500 hover:bg-violet-600 text-white p-3 rounded-full shadow-lg transition-transform hover:scale-110">
+            <Heart className="w-6 h-6" />
+          </button>
+          <button className="bg-emerald-500 hover:bg-emerald-600 text-white p-3 rounded-full shadow-lg transition-transform hover:scale-110">
+            <Video className="w-6 h-6" />
+          </button>
+        </div>
+      )}
 
       {/* Frame Attachment Point - Empty space where the floating frame will dock */}
       <div 
@@ -433,70 +455,74 @@ function App() {
         </div>
       </div>
       
-      {/* Floating Call-to-Action Card */}
-      <div 
-        className={`fixed bottom-20 right-6 bg-white rounded-lg shadow-2xl p-4 transition-all duration-500 z-40 max-w-xs ${
-          scrolled && scrollProgress < 0.9 ? 'translate-y-0 opacity-100 scale-100 pointer-events-auto' : 'translate-y-20 opacity-0 scale-90 pointer-events-none'
-        }`}
-      >
-        <div className="flex items-start gap-3">
-          <div className="bg-indigo-100 p-2 rounded-full flex-shrink-0">
-            <Calendar className="w-5 h-5 text-indigo-600" />
-          </div>
-          <div>
-            <p className="font-semibold text-gray-900 text-sm">Schedule your consultation</p>
-            <p className="text-xs text-gray-500 mb-2">Our specialists are ready to help</p>
-            <div className="flex gap-2">
-              <button
-                className="text-xs bg-indigo-600 text-white px-3 py-1 rounded font-medium hover:bg-indigo-700 transition-colors"
-                onClick={() => navigate('/doctors')}
-              >
-                Book Now
-              </button>
-              <button
-                className="text-xs bg-emerald-500 text-white px-3 py-1 rounded font-medium hover:bg-emerald-600 transition-colors flex items-center gap-1"
-                onClick={() => navigate('/my-appointments')}
-              >
-                <Video className="w-3 h-3" /> Virtual
-              </button>
-            </div>
-          </div>
-          <button className="text-gray-400 hover:text-gray-600">
-            ✕
-          </button>
-        </div>
-      </div>
-      
-      {/* Sticky Action Bar that appears when scrolling */}
-      <div className={`fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t border-gray-200 py-3 px-4 transition-transform duration-300 z-50 ${
-        scrolled ? 'translate-y-0' : 'translate-y-full'
-      }`}>
-        <div className="container mx-auto flex flex-wrap justify-between items-center">
-          <div className="flex items-center gap-3">
-            <div className="bg-indigo-100 p-2 rounded-full">
-              <Globe className="w-5 h-5 text-indigo-600" />
+      {/* Floating Call-to-Action Card - Only show on desktop */}
+      {!isMobile && (
+        <div 
+          className={`fixed bottom-20 right-6 bg-white rounded-lg shadow-2xl p-4 transition-all duration-500 z-40 max-w-xs ${
+            scrolled && scrollProgress < 0.9 ? 'translate-y-0 opacity-100 scale-100 pointer-events-auto' : 'translate-y-20 opacity-0 scale-90 pointer-events-none'
+          }`}
+        >
+          <div className="flex items-start gap-3">
+            <div className="bg-indigo-100 p-2 rounded-full flex-shrink-0">
+              <Calendar className="w-5 h-5 text-indigo-600" />
             </div>
             <div>
-              <p className="font-semibold text-gray-900">Ready to start your medical journey?</p>
-              <p className="text-sm text-gray-600">50+ countries, 500+ hospitals, 1000+ specialists</p>
+              <p className="font-semibold text-gray-900 text-sm">Schedule your consultation</p>
+              <p className="text-xs text-gray-500 mb-2">Our specialists are ready to help</p>
+              <div className="flex gap-2">
+                <button
+                  className="text-xs bg-indigo-600 text-white px-3 py-1 rounded font-medium hover:bg-indigo-700 transition-colors"
+                  onClick={() => navigate('/doctors')}
+                >
+                  Book Now
+                </button>
+                <button
+                  className="text-xs bg-emerald-500 text-white px-3 py-1 rounded font-medium hover:bg-emerald-600 transition-colors flex items-center gap-1"
+                  onClick={() => navigate('/my-appointments')}
+                >
+                  <Video className="w-3 h-3" /> Virtual
+                </button>
+              </div>
             </div>
-          </div>
-          <div className="flex gap-3">
-            <button
-              className="bg-emerald-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-emerald-600 transition-colors whitespace-nowrap mt-3 sm:mt-0 shadow-md flex items-center gap-2"
-              onClick={() => navigate('/my-appointments')}
-            >
-              <Video className="w-5 h-5" /> Quick Video Consult
-            </button>
-            <button
-              className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition-colors whitespace-nowrap mt-3 sm:mt-0 shadow-md"
-              onClick={() => navigate('/login')}
-            >
-              Get Started Now
+            <button className="text-gray-400 hover:text-gray-600">
+              ✕
             </button>
           </div>
         </div>
-      </div>
+      )}
+      
+      {/* Sticky Action Bar that appears when scrolling - Only show on desktop */}
+      {!isMobile && (
+        <div className={`fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t border-gray-200 py-3 px-4 transition-transform duration-300 z-50 ${
+          scrolled ? 'translate-y-0' : 'translate-y-full'
+        }`}>
+          <div className="container mx-auto flex flex-wrap justify-between items-center">
+            <div className="flex items-center gap-3">
+              <div className="bg-indigo-100 p-2 rounded-full">
+                <Globe className="w-5 h-5 text-indigo-600" />
+              </div>
+              <div>
+                <p className="font-semibold text-gray-900">Ready to start your medical journey?</p>
+                <p className="text-sm text-gray-600">50+ countries, 500+ hospitals, 1000+ specialists</p>
+              </div>
+            </div>
+            <div className="flex gap-3">
+              <button
+                className="bg-emerald-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-emerald-600 transition-colors whitespace-nowrap mt-3 sm:mt-0 shadow-md flex items-center gap-2"
+                onClick={() => navigate('/my-appointments')}
+              >
+                <Video className="w-5 h-5" /> Quick Video Consult
+              </button>
+              <button
+                className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition-colors whitespace-nowrap mt-3 sm:mt-0 shadow-md"
+                onClick={() => navigate('/login')}
+              >
+                Get Started Now
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       
       {/* Add some animation styles */}
       <style jsx>{`
