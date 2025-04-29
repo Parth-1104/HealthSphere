@@ -28,7 +28,7 @@ const DoctorDashboard = () => {
   }, [dToken, getDashData])
 
   const handleVideoCall = () => {
-    window.location.href = 'http://localhost:3000';
+    window.location.href = 'https://virtu-doc.vercel.app';
   };
 
   const isWithinCallTime = (appointment) => {
