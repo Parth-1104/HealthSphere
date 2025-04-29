@@ -16,7 +16,7 @@ const MyAppointments = () => {
     const slotDateFormat = (slotDate) => {
         const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         const dateArray = slotDate.split('_');
-        return dateArray[0] + " " + months[Number(dateArray[1])] + " " + dateArray[2];
+        return dateArray[0] + " " + months[Number(dateArray[1])-1] + " " + dateArray[2];
     };
 
     useEffect(() => {
@@ -138,19 +138,36 @@ const MyAppointments = () => {
     };
 
     const handleVideoCall = () => {
-        window.location.href = 'http://localhost:3000';
+        window.location.href = 'https://virtu-doc.vercel.app';
     };
 
     const isWithinCallTime = (appointment) => {
         if (!appointment || !appointment.slotDate || !appointment.slotTime) {
             return false;
         }
-
+    
         try {
-            const bookingDateTime = new Date(`${appointment.slotDate}T${appointment.slotTime}`);
+            // Parse the date in the format day_month_year
+            const [day, month, year] = appointment.slotDate.split('_').map(Number);
+            
+            // Parse time (assuming format like "10:00 AM")
+            let timeStr = appointment.slotTime;
+            let hours = parseInt(timeStr.split(':')[0]);
+            let minutes = parseInt(timeStr.split(':')[1]);
+            
+            // Handle AM/PM
+            if (timeStr.includes('PM') && hours < 12) {
+                hours += 12;
+            } else if (timeStr.includes('AM') && hours === 12) {
+                hours = 0;
+            }
+            
+            // Create date object (months are 0-indexed in JS Date)
+            const bookingDateTime = new Date(year, month - 1, day, hours, minutes);
+            
             const fifteenMinutesBefore = new Date(bookingDateTime.getTime() - 15 * 60 * 1000);
             const fifteenMinutesAfter = new Date(bookingDateTime.getTime() + 15 * 60 * 1000);
-
+    
             return currentTime >= fifteenMinutesBefore && currentTime <= fifteenMinutesAfter;
         } catch (error) {
             console.error("Error parsing date or time:", error);
