@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Bitcoin, Car, Video, UserRound, Plane, Building2, Stethoscope, Shield, Globe, ArrowRight, Check, ChevronRight, Heart, Phone, Calendar } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { assets } from '../assets/assets';
+
 
 function App() {
   const [activeTab, setActiveTab] = useState(0);
@@ -66,17 +68,19 @@ function App() {
 
   const tabs = [
     { icon: <Car />, label: "Transport" },
+    { icon: <Video />, label: "Remote Call" },
+    { icon: <Bitcoin />, label: "Payments" },
     { icon: <Building2 />, label: "Facilities" },
     { icon: <UserRound />, label: "Support" },
-    { icon: <Bitcoin />, label: "Payments" },
-    { icon: <Video />, label: "Remote Call" }
+    
+    
   ];
 
   const tabContent = [
     {
       title: "Smart Transportation Network",
       description: "Door-to-door service with professional drivers, medical vehicles, and real-time tracking. Priority lanes for medical emergencies and custom accessibility options.",
-      image:"",
+      image:assets.cab,
       stats: [
         { value: "24/7", label: "Service" },
         { value: "5min", label: "Response" },
@@ -84,9 +88,29 @@ function App() {
       ]
     },
     {
+      title: "Virtual Doctor Consultations",
+      description: "Connect with world-class specialists through secure, high-definition video calls from anywhere. Get expert opinions, follow-up consultations, and immediate care without travel.",
+      image:assets.call,
+            stats: [
+        { value: "300+", label: "Specialists" },
+        { value: "24/7", label: "Availability" },
+        { value: "HD", label: "Quality" }
+      ]
+    },
+    {
+      title: "Transparent Financial Solutions",
+      description: "Clear pricing with no hidden fees, flexible payment options including cryptocurrency, and assistance with insurance claims and reimbursement procedures.",
+      image:assets.payment,
+            stats: [
+        { value: "100%", label: "Transparent" },
+        { value: "12+", label: "Currencies" },
+        { value: "Secure", label: "Blockchain" }
+      ]
+    },
+    {
       title: "World-Class Medical Facilities",
       description: "Access to a global network of JCI-accredited hospitals, specialized clinics, and recovery centers equipped with cutting-edge technology and staffed by leading specialists.",
-      image:"",
+      image:assets.facilities ,
       stats: [
         { value: "500+", label: "Hospitals" },
         { value: "50+", label: "Countries" },
@@ -96,33 +120,15 @@ function App() {
     {
       title: "Personalized Care Concierge",
       description: "Dedicated medical coordinators handle everything from appointment scheduling to translation services, dietary requirements, and cultural considerations.",
-      image:"",
+      image:assets.support,
             stats: [
         { value: "24/7", label: "Support" },
         { value: "15+", label: "Languages" },
         { value: "100%", label: "Customized" }
       ]
     },
-    {
-      title: "Transparent Financial Solutions",
-      description: "Clear pricing with no hidden fees, flexible payment options including cryptocurrency, and assistance with insurance claims and reimbursement procedures.",
-      image:"",
-            stats: [
-        { value: "100%", label: "Transparent" },
-        { value: "12+", label: "Currencies" },
-        { value: "Secure", label: "Blockchain" }
-      ]
-    },
-    {
-      title: "Virtual Doctor Consultations",
-      description: "Connect with world-class specialists through secure, high-definition video calls from anywhere. Get expert opinions, follow-up consultations, and immediate care without travel.",
-      image:"",
-            stats: [
-        { value: "300+", label: "Specialists" },
-        { value: "24/7", label: "Availability" },
-        { value: "HD", label: "Quality" }
-      ]
-    },
+    
+   
   ];
 
   // Calculate rotation threshold - MODIFIED for earlier rotation in mobile view
