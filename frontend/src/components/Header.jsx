@@ -13,6 +13,10 @@ function App() {
   const mobileFrameRef = useRef(null);
   const frameAttachmentRef = useRef(null);
   const navigate = useNavigate();
+  const handleVideoCall = () => {
+  window.location.href = 'https://virtu-doc.vercel.app';
+};
+
   
   // Check if the device is mobile based on screen width
   useEffect(() => {
@@ -291,9 +295,13 @@ function App() {
           <button className="bg-violet-500 hover:bg-violet-600 text-white p-3 rounded-full shadow-lg transition-transform hover:scale-110">
             <Heart className="w-6 h-6" />
           </button>
-          <button className="bg-emerald-500 hover:bg-emerald-600 text-white p-3 rounded-full shadow-lg transition-transform hover:scale-110">
-            <Video className="w-6 h-6" />
-          </button>
+          <button
+  onClick={handleVideoCall}
+  className="bg-emerald-500 hover:bg-emerald-600 text-white p-3 rounded-full shadow-lg transition-transform hover:scale-110"
+>
+  <Video className="w-6 h-6" />
+</button>
+
         </div>
       )}
 
@@ -478,7 +486,7 @@ function App() {
                 </button>
                 <button
                   className="text-xs bg-emerald-500 text-white px-3 py-1 rounded font-medium hover:bg-emerald-600 transition-colors flex items-center gap-1"
-                  onClick={() => navigate('/my-appointments')}
+                  onClick={handleVideoCall}
                 >
                   <Video className="w-3 h-3" /> Virtual
                 </button>
@@ -509,7 +517,7 @@ function App() {
             <div className="flex gap-3">
               <button
                 className="bg-emerald-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-emerald-600 transition-colors whitespace-nowrap mt-3 sm:mt-0 shadow-md flex items-center gap-2"
-                onClick={() => navigate('/my-appointments')}
+                onClick={handleVideoCall}
               >
                 <Video className="w-5 h-5" /> Quick Video Consult
               </button>
